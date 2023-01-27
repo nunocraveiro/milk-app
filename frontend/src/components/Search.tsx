@@ -1,20 +1,32 @@
 import './Search.css';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import MilkProduct from '../types';
 
 type Props = {
     milks: MilkProduct[],
+    displayedMilks: MilkProduct[];
     setDisplayedMilks: (filteredMilks: MilkProduct[]) => void,
-    setFilterActive: (activeBool: boolean) => void
+    setSearchActive: (activeBool: boolean) => void,
+    filterActive: boolean
 }
 
-const SearchFilter = ({milks, setDisplayedMilks, setFilterActive}: Props) => {
-    const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setFilterActive(true);
-        if (e.target.value === '') {
-            return setFilterActive(false);
+const SearchFilter = ({milks, displayedMilks, setDisplayedMilks, setSearchActive, filterActive}: Props) => {
+    useEffect(() => {
+        if (!filterActive) {
+            localStorage.setItem('filteredArray', JSON.stringify(displayedMilks));
         }
-        return setDisplayedMilks(milks.filter(milk => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
+    }, [displayedMilks, filterActive])
+
+    const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchActive(true);
+        if (e.target.value === '') {
+            localStorage.clear();
+            return setSearchActive(false);
+        }
+        if (!filterActive) {
+            return setDisplayedMilks(milks.filter(milk => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
+        }
+        return setDisplayedMilks(JSON.parse(localStorage.getItem('filteredArray')!).filter((milk: MilkProduct) => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
     }
 
     return (

@@ -16,7 +16,6 @@
 }
 
 .filter {
-    /* align-self: center; */
     color: rgb(112, 111, 111);
     font-size: 14px;
 }
@@ -30,11 +29,21 @@
 
 .dropdown {
     background-color: white;
-    height: 10rem;
-    width: 8rem;
+    height: 16rem;
+    width: 9rem;
     border-radius: 4px;
     padding-left: 0.3rem;
     padding-top: 0.3rem;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.typeCheckbox {
+    margin-bottom: 0.2rem;
+}
+
+.typeCheckbox > input {
+    margin-right: 0.3rem;
 }
 
 .hide {
