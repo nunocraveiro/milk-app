@@ -1,4 +1,21 @@
 .App {
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: #ffe3e2;
+}
+
+.searchFilterFeatures {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 17rem;
+  margin-right: 17rem;
+  margin-top: 3rem;
+}
+
+.productNum {
+  font-size: 14px;
+  color: rgb(112, 111, 111);
+  margin-left: 17rem;
 }

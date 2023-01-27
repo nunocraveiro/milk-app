@@ -1,0 +1,47 @@
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.filterFeature {
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    align-self: flex-end;
+}
+
+.filterFeature:hover {
+    cursor: pointer;
+}
+
+.filter {
+    /* align-self: center; */
+    color: rgb(112, 111, 111);
+    font-size: 14px;
+}
+
+.filterOpenIcon {
+    align-self: center;
+    color: rgb(112, 111, 111);
+    font-size: 1.1rem;
+    padding-top: 0.1rem;
+}
+
+.dropdown {
+    background-color: white;
+    height: 10rem;
+    width: 8rem;
+    border-radius: 4px;
+    padding-left: 0.3rem;
+    padding-top: 0.3rem;
+}
+
+.hide {
+    display: none;
+}
+
+.checkBlank {
+    font-size: 1.1rem;
+    color: gray;
+}

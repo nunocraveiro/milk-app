@@ -1,0 +1,52 @@
+.productCard {
+    border-radius: 8px;
+    width: 14rem;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    background-color: #f6f6f6;
+}
+
+.productCard:hover {
+    cursor: pointer;
+}
+
+.milkImg {
+    align-self: center;
+    width: 6rem;
+}
+
+.cardText {
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(255, 235, 242);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.productName {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.typePrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-weight: 300;
+}
+
+.liters {
+    color: rgb(0, 150, 0);
+    padding-right: 0.8rem;
+    font-weight: 500;
+}

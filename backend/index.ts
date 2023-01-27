@@ -10,8 +10,7 @@ app.use(express.json());
 const port: number = 3001;
  
 app.get('/', (_req, _res) => {
-    _res.send(milkData);
-    // _res.json(milkData);
+    _res.json(milkData);
 });
 
 app.listen(port, () => {
