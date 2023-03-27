@@ -3,6 +3,7 @@
   margin: 0;
   font-family: 'Nunito Sans', sans-serif;
   background-color: #ffe3e2;
+  height: fit-content;
 }
 
 .searchFilterFeatures {
@@ -12,6 +13,7 @@
   margin-left: 17rem;
   margin-right: 17rem;
   margin-top: 3rem;
+  height: 3rem;
 }
 
 .productNum {

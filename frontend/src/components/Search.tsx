@@ -1,38 +1,37 @@
 import './Search.css';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import MilkProduct from '../types';
 
 type Props = {
     milks: MilkProduct[],
-    displayedMilks: MilkProduct[];
-    setDisplayedMilks: (filteredMilks: MilkProduct[]) => void,
     setSearchActive: (activeBool: boolean) => void,
-    filterActive: boolean
+    searchResults: MilkProduct[],
+    setSearchResults: (milkResults: MilkProduct[]) => void
 }
 
-const SearchFilter = ({milks, displayedMilks, setDisplayedMilks, setSearchActive, filterActive}: Props) => {
-    useEffect(() => {
-        if (!filterActive) {
-            localStorage.setItem('filteredArray', JSON.stringify(displayedMilks));
-        }
-    }, [displayedMilks, filterActive])
+const SearchFilter = ({milks, setSearchActive, searchResults, setSearchResults}: Props) => {
+    const searchRef = useRef<HTMLInputElement>(null);
 
     const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchActive(true);
-        if (e.target.value === '') {
-            localStorage.clear();
-            return setSearchActive(false);
+        if (e.currentTarget.value === '') {
+            setSearchActive(false)
+            return setSearchResults([]);
         }
-        if (!filterActive) {
-            return setDisplayedMilks(milks.filter(milk => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
-        }
-        return setDisplayedMilks(JSON.parse(localStorage.getItem('filteredArray')!).filter((milk: MilkProduct) => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
+        return setSearchResults(milks.filter(milk => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
+    }
+
+    const closeHandler = () => {
+        searchRef.current!.value = '';
+        setSearchActive(false)
+        return setSearchResults([]);
     }
 
     return (
         <section className='searchFeature'>
             <div className='searchIconContainer'><span className="material-symbols-outlined searchIcon">search</span></div>
-            <input className='search' type="text" placeholder="Search" onChange={searchHandler}/>
+            <input className='search' type="text" placeholder="Search" onChange={searchHandler} ref={searchRef}/>
+            <div className='closeIconContainer' onClick={closeHandler}><span className="material-symbols-outlined searchIcon">close</span></div>
         </section>
     )
 }

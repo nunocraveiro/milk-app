@@ -1,7 +1,6 @@
 .filterContainer {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
 }
 
 .filterFeature {
@@ -9,9 +8,6 @@
     flex-direction: row;
     user-select: none;
     align-self: flex-end;
-}
-
-.filterFeature:hover {
     cursor: pointer;
 }
 
@@ -29,25 +25,33 @@
 
 .dropdown {
     background-color: white;
-    height: 16rem;
     width: 9rem;
     border-radius: 4px;
-    padding-left: 0.3rem;
-    padding-top: 0.3rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.3rem;
     font-size: 14px;
     font-weight: 300;
+    z-index: 1;
 }
 
 .typeCheckbox {
     margin-bottom: 0.2rem;
+    user-select: none;
 }
 
 .typeCheckbox > input {
     margin-right: 0.3rem;
+    cursor: pointer;
+}
+
+.typeCheckbox > label {
+    cursor: pointer;
 }
 
 .hide {
-    display: none;
+    visibility: hidden;
 }
 
 .checkBlank {

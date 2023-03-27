@@ -1,22 +1,15 @@
 import './Filter.css';
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent } from 'react';
 import MilkProduct from '../types';
 
 type Props = {
     milks: MilkProduct[],
-    displayedMilks: MilkProduct[],
-    setDisplayedMilks: (filteredMilks: MilkProduct[]) => void,
-    searchActive: boolean,
-    filterActive: boolean,
-    setFilterActive: (activeBool: boolean) => void
+    setFilterActive: (activeBool: boolean) => void,
+    filterResults:  MilkProduct[],
+    setFilterResults: (milkResults: MilkProduct[]) => void
 }
 
-const Filter = ({milks, displayedMilks, setDisplayedMilks, searchActive, filterActive, setFilterActive}: Props) => {
-    useEffect(() => {
-        if (!searchActive) {
-            localStorage.setItem('filteredArray', JSON.stringify(displayedMilks));
-        }
-    }, [displayedMilks, searchActive])
+const Filter = ({milks, setFilterActive, filterResults, setFilterResults}: Props) => {
 
     const getMilkTypes = (milkArray: MilkProduct[]) => {
         const auxArray: string[] = [];
@@ -30,35 +23,29 @@ const Filter = ({milks, displayedMilks, setDisplayedMilks, searchActive, filterA
     }
 
     const dropdownHandler = (e: MouseEvent<HTMLDivElement>) => {
-        if (e.currentTarget.nextElementSibling!.className === 'hide') {
+        if (e.currentTarget.nextElementSibling!.className === 'dropdown hide') {
             e.currentTarget.lastElementChild!.innerHTML = 'arrow_drop_up';
-            return e.currentTarget.nextElementSibling!.className = 'dropdown';
+            return e.currentTarget.nextElementSibling!.classList.remove('hide');
         }
         e.currentTarget.lastElementChild!.innerHTML = 'arrow_drop_down';
-        return e.currentTarget.nextElementSibling!.className = 'hide';
+        return e.currentTarget.nextElementSibling!.classList.add('hide');
     }
 
     const filterHandler = (e: MouseEvent<HTMLInputElement>) => {
-        let target = e.target as HTMLInputElement;
+        const target = e.target as HTMLInputElement;
         setFilterActive(true);
-        if (localStorage.getItem('filteredArray') && displayedMilks.length === JSON.parse(localStorage.getItem('filteredArray')!).length) {
-            localStorage.clear();
-            return setFilterActive(false);
-        }
-        if (!target.checked && displayedMilks.length !== 0) {
-            setDisplayedMilks(displayedMilks.filter((milk: MilkProduct) => milk.type !== target.name));
-        }
-        if (target.checked && displayedMilks.length === 0) {
-            setDisplayedMilks(milks.filter((milk: MilkProduct) => milk.type === target.name));
-        }
-        if (target.checked && displayedMilks.length !== 0) {
-            if (searchActive && !filterActive) {
-                return setDisplayedMilks(JSON.parse(localStorage.getItem('filteredArray')!).filter((milk: MilkProduct) => milk.type === target.name));
+        if (!target.checked && filterResults.length > 0) {
+            const milkResults = filterResults.filter((milk: MilkProduct) => milk.type !== target.name);
+            if (milkResults.length === 0) {
+                setFilterActive(false);
             }
-            if (searchActive && filterActive) { // add verification and error message
-                return setDisplayedMilks(displayedMilks.concat(JSON.parse(localStorage.getItem('filteredArray')!).filter((milk: MilkProduct) => milk.type === target.name)));
-            }
-            return setDisplayedMilks(displayedMilks.concat(milks.filter((milk: MilkProduct) => milk.type === target.name)));
+            return setFilterResults(milkResults);
+        }
+        if (target.checked && filterResults.length === 0) {
+            setFilterResults(milks.filter((milk: MilkProduct) => milk.type === target.name));
+        }
+        if (target.checked && filterResults.length > 0) {
+            setFilterResults(filterResults.concat(milks.filter((milk: MilkProduct) => milk.type === target.name)));
         }
     }
 
@@ -67,11 +54,11 @@ const Filter = ({milks, displayedMilks, setDisplayedMilks, searchActive, filterA
             <div className="filterFeature" onClick={dropdownHandler}>
                 <p className='filter'>Filter</p><span className="material-symbols-outlined filterOpenIcon">arrow_drop_down</span>
             </div>
-            <section className='hide'>
+            <section className='dropdown hide'>
                 {getMilkTypes(milks).map((milkType: string) => 
-                    <div className='typeCheckbox' key={milkType}>
-                        <input type="checkbox" id={milkType} name={milkType} onClick={filterHandler}></input>
-                        <label htmlFor={milkType}>{milkType}</label>
+                    <div className='typeCheckbox down' key={milkType}>
+                        <input className='down' type="checkbox" id={milkType} name={milkType} onClick={filterHandler}></input>
+                        <label className='down' htmlFor={milkType}>{milkType}</label>
                     </div>
                 )}
             </section>
