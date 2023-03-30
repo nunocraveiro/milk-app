@@ -1,26 +1,19 @@
 import './Header.css';
-import { RefObject, MouseEvent, useRef } from 'react';
+import { useRef } from 'react';
 import MilkProduct from '../types';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
-    cartRef: RefObject<HTMLDivElement>,
     cart: MilkProduct[]
 }
 
-const Header = ({cartRef, cart}: Props) => {
+const Header = ({cart}: Props) => {
     const cartIconRef = useRef<HTMLSpanElement>(null);
-
-    const openCartHandler = (e: MouseEvent<HTMLSpanElement>) => {
-        const target = e.target as HTMLElement;
-        if (cartRef.current!.className.includes('showCart')) {
-            return cartRef.current!.classList.remove('showCart');
-        }
-        return cartRef.current!.classList.add('showCart');
-    }
+    const navigate = useNavigate();
 
     return (
         <header className='header'>
-            <div className='milkTitle'>
+            <div className='milkTitle' onClick={() => navigate('/')}>
                 <h1>M I L K</h1>
                 <h1>S T O R E</h1>
             </div>
@@ -29,8 +22,8 @@ const Header = ({cartRef, cart}: Props) => {
                     <span className="material-symbols-outlined personIcon">person</span>
                     <span className='headerMenuText login'>Log in</span>
                 </div>
-                <div className='headerMenuSection'>
-                    <span className="material-symbols-outlined cartIcon" onClick={openCartHandler} ref={cartIconRef}>shopping_bag</span>
+                <div className='headerMenuSection' onClick={() => navigate('/cart')}>
+                    <span className="material-symbols-outlined cartIcon" ref={cartIconRef}>shopping_bag</span>
                     <span className='headerMenuText number'>{cart.length}</span>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import MilkProduct from './types';
 import Search from './components/Search';
 import Filter from './components/Filter';
 import ProductPage from './components/ProductPage';
+import Cart from './components/Cart';
 
 function App() {
   const [milks, setMilks] = useState<MilkProduct[]>([]);
@@ -18,7 +19,6 @@ function App() {
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [cart, setCart] = useState<MilkProduct[]>([]);
 
-  const cartRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLSpanElement>(null);
   const filterRef = useRef<HTMLElement>(null);
 
@@ -54,8 +54,7 @@ function App() {
       <Routes>
         <Route path='/' element={
           <>
-            <Header cartRef={cartRef} cart={cart}/>
-            <div className='cart' ref={cartRef}></div>
+            <Header cart={cart}/>
             <section className='searchFilterFeatures'>
               <Search milks={milks} setSearchActive={setSearchActive} searchResults={searchResults} setSearchResults={setSearchResults} />
               <Filter milks={milks} setFilterActive={setFilterActive} filterResults={filterResults} setFilterResults={setFilterResults} arrowRef={arrowRef} filterRef={filterRef}/>
@@ -88,12 +87,15 @@ function App() {
         } />
         <Route path='/:productId' element={
           <>
-            <Header cartRef={cartRef} cart={cart}/>
+            <Header cart={cart}/>
             <ProductPage milks={milks} cart={cart} setCart={setCart}/>
           </>
         } />
         <Route path='/cart' element={
-          <></>
+          <>
+            <Header cart={cart}/>
+            <Cart cart={cart}/>
+          </>
         } />
       </Routes>
     </div>
