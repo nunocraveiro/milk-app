@@ -2,12 +2,70 @@
     display: flex;
     flex-direction: row;
     font-size: 1.2rem;
-    justify-content: center;
+    height: 6.5rem;
+    justify-content: space-between;
+    align-items: center;
     background-color: white;
+    text-align: center;
+    padding-left: 17rem;
+    padding-right: 17rem;
 }
 
-.header > h1 {
+.dummy {
+    visibility: hidden;
+}
+
+.milkTitle {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.milkTitle > h1 {
     font-weight: 400;
-    margin-right: 2rem;
     color: #cb889f;
+}
+
+.headerMenu {
+    display: flex;
+    flex-direction: row;
+    width: 8.5rem;
+    height: 1.4rem;
+    justify-content: space-between;
+    color: rgb(112, 111, 111);
+    user-select: none;
+    margin-top: 0.15rem;
+    padding-right: 0.15rem;
+}
+
+.personIcon {
+    font-size: 1.65rem;
+    cursor: pointer;
+}
+
+.cartIcon {
+    margin-top: 0.1rem;
+    cursor: pointer;
+}
+
+.headerMenuSection {
+    display: flex;
+    flex-direction: row;
+}
+
+.headerMenuText {
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    margin-left: 0.2rem;
+}
+
+.headerMenuSection:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.number {
+    padding-top: 0.04rem;
 }

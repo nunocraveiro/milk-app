@@ -1,16 +1,17 @@
 import './Filter.css';
-import { MouseEvent } from 'react';
+import { MouseEvent, RefObject } from 'react';
 import MilkProduct from '../types';
 
 type Props = {
     milks: MilkProduct[],
     setFilterActive: (activeBool: boolean) => void,
     filterResults:  MilkProduct[],
-    setFilterResults: (milkResults: MilkProduct[]) => void
+    setFilterResults: (milkResults: MilkProduct[]) => void,
+    arrowRef: RefObject<HTMLSpanElement>,
+    filterRef: RefObject<HTMLElement>
 }
 
-const Filter = ({milks, setFilterActive, filterResults, setFilterResults}: Props) => {
-
+const Filter = ({milks, setFilterActive, filterResults, setFilterResults, arrowRef, filterRef}: Props) => {
     const getMilkTypes = (milkArray: MilkProduct[]) => {
         const auxArray: string[] = [];
         milkArray.forEach((milk: MilkProduct) => {
@@ -23,12 +24,12 @@ const Filter = ({milks, setFilterActive, filterResults, setFilterResults}: Props
     }
 
     const dropdownHandler = (e: MouseEvent<HTMLDivElement>) => {
-        if (e.currentTarget.nextElementSibling!.className === 'dropdown hide') {
-            e.currentTarget.lastElementChild!.innerHTML = 'arrow_drop_up';
-            return e.currentTarget.nextElementSibling!.classList.remove('hide');
+        if (filterRef.current!.className === 'dropdown hide') {
+            arrowRef.current!.innerHTML = 'arrow_drop_up';
+            return filterRef.current!.classList.remove('hide');
         }
-        e.currentTarget.lastElementChild!.innerHTML = 'arrow_drop_down';
-        return e.currentTarget.nextElementSibling!.classList.add('hide');
+        arrowRef.current!.innerHTML = 'arrow_drop_down';
+        return filterRef.current!.classList.add('hide');
     }
 
     const filterHandler = (e: MouseEvent<HTMLInputElement>) => {
@@ -52,9 +53,9 @@ const Filter = ({milks, setFilterActive, filterResults, setFilterResults}: Props
     return (
         <section className="filterContainer">
             <div className="filterFeature" onClick={dropdownHandler}>
-                <p className='filter'>Filter</p><span className="material-symbols-outlined filterOpenIcon">arrow_drop_down</span>
+                <p className='filter'>Filter</p><span className="material-symbols-outlined filterOpenIcon" ref={arrowRef}>arrow_drop_down</span>
             </div>
-            <section className='dropdown hide'>
+            <section className='dropdown hide' ref={filterRef}>
                 {getMilkTypes(milks).map((milkType: string) => 
                     <div className='typeCheckbox down' key={milkType}>
                         <input className='down' type="checkbox" id={milkType} name={milkType} onClick={filterHandler}></input>
