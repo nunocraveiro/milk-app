@@ -1,10 +1,10 @@
 import { useEffect, useState, MouseEvent, useRef } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import Header from './components/Header'
 import ProductGrid from './components/ProductGrid'
-import MilkProduct from './types';
+import { MilkProduct, CartProduct } from './types';
 import Search from './components/Search';
 import Filter from './components/Filter';
 import ProductPage from './components/ProductPage';
@@ -17,7 +17,8 @@ function App() {
   const [searchFilterResults, setSearchFilterResults] = useState<MilkProduct[]>([]);
   const [searchActive, setSearchActive] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
-  const [cart, setCart] = useState<MilkProduct[]>([]);
+  const [cart, setCart] = useState<CartProduct[]>([]);
+  const [cartSum, setCartSum] = useState<number>(0);
 
   const arrowRef = useRef<HTMLSpanElement>(null);
   const filterRef = useRef<HTMLElement>(null);
@@ -41,9 +42,13 @@ function App() {
     }
   }, [searchResults, filterResults])
 
+  useEffect(() => {
+    setCartSum(cart.reduce((acc, obj) => acc + obj.quantity, 0));
+  }, [cart])
+
   const closeFilterDropdown = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
-    if (!target.className.includes('search') && !target.className.includes('filter') && !target.className.includes('down')) {
+    if (!target.className.includes('search') && !target.className.includes('filter') && !target.className.includes('down') && arrowRef.current) {
       arrowRef.current!.innerHTML = 'arrow_drop_down';
       filterRef.current!.classList.add('hide');
     }
@@ -54,7 +59,7 @@ function App() {
       <Routes>
         <Route path='/' element={
           <>
-            <Header cart={cart}/>
+            <Header cartSum={cartSum}/>
             <section className='searchFilterFeatures'>
               <Search milks={milks} setSearchActive={setSearchActive} searchResults={searchResults} setSearchResults={setSearchResults} />
               <Filter milks={milks} setFilterActive={setFilterActive} filterResults={filterResults} setFilterResults={setFilterResults} arrowRef={arrowRef} filterRef={filterRef}/>
@@ -87,14 +92,14 @@ function App() {
         } />
         <Route path='/:productId' element={
           <>
-            <Header cart={cart}/>
+            <Header cartSum={cartSum}/>
             <ProductPage milks={milks} cart={cart} setCart={setCart}/>
           </>
         } />
         <Route path='/cart' element={
           <>
-            <Header cart={cart}/>
-            <Cart cart={cart}/>
+            <Header cartSum={cartSum}/>
+            <Cart cart={cart} setCart={setCart} cartSum={cartSum}/>
           </>
         } />
       </Routes>

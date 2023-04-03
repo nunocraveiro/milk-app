@@ -1,8 +1,11 @@
-interface MilkProduct {
+export interface MilkProduct {
     name: string,
     type: string,
     storage: number,
     id: string
 }
 
-export default MilkProduct;
+export interface CartProduct {
+    product: MilkProduct,
+    quantity: number
+}

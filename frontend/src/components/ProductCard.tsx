@@ -1,5 +1,5 @@
 import './ProductCard.css';
-import MilkProduct from '../types';
+import { MilkProduct } from '../types';
 import milkImg from '../milk.png';
 import { useNavigate } from 'react-router-dom';
 

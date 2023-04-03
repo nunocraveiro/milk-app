@@ -1,6 +1,6 @@
 import './Filter.css';
 import { MouseEvent, RefObject } from 'react';
-import MilkProduct from '../types';
+import { MilkProduct } from '../types';
 
 type Props = {
     milks: MilkProduct[],

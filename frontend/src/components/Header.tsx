@@ -1,13 +1,12 @@
 import './Header.css';
 import { useRef } from 'react';
-import MilkProduct from '../types';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-    cart: MilkProduct[]
+    cartSum: number
 }
 
-const Header = ({cart}: Props) => {
+const Header = ({ cartSum }: Props) => {
     const cartIconRef = useRef<HTMLSpanElement>(null);
     const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ const Header = ({cart}: Props) => {
                 </div>
                 <div className='headerMenuSection' onClick={() => navigate('/cart')}>
                     <span className="material-symbols-outlined cartIcon" ref={cartIconRef}>shopping_bag</span>
-                    <span className='headerMenuText number'>{cart.length}</span>
+                    <span className='headerMenuText number'>{cartSum}</span>
                 </div>
             </div>
         </header>

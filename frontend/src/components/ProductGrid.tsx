@@ -1,5 +1,5 @@
 import './ProductGrid.css';
-import MilkProduct from '../types';
+import { MilkProduct } from '../types';
 import ProductCard from './ProductCard';
 
 type Props = {

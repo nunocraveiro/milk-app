@@ -1,0 +1,56 @@
+.cartCard {
+    height: 5rem;
+    background-color: #f6f6f6;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.cartCard img {
+    padding: 0;
+    margin: 0;
+    width: 4.7rem;
+    margin-left: 1rem;
+}
+
+.cartProductInfo {
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    width: 15rem;
+}
+
+.cartProductName {
+    font-weight: 700;
+}
+
+.restInfo {
+    color: rgb(87, 86, 86);
+}
+
+.infoContainer {
+    margin-left: 2.6rem;
+    font-size: 0.9rem;
+}
+
+.boldInfo {
+    font-weight: 700;
+}
+
+.quantityButton {
+    cursor: pointer;
+}
+
+.itemQuantity {
+    font-weight: 700;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.cartDelete {
+    cursor: pointer;
+    font-size: 1.3rem;
+    margin-left: 0.8rem;
+}

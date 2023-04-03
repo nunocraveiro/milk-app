@@ -1,6 +1,6 @@
 import './Search.css';
 import { ChangeEvent, useRef } from 'react';
-import MilkProduct from '../types';
+import { MilkProduct } from '../types';
 
 type Props = {
     milks: MilkProduct[],
