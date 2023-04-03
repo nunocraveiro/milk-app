@@ -12,11 +12,21 @@ type Props = {
 const Cart = ({cart, setCart, cartSum}: Props) => {
     const totalItemsRef = useRef<HTMLParagraphElement>(null)
 
+    if (cart.length === 0) {
+        return (
+            <div className='cart'>
+                <p className='cartTitle'>Shopping cart</p>
+                <div className='cartCardsContainer'>
+                    <p className='emptySentence'>Your shopping cart is empty :(</p>
+                </div>
+            </div>
+        )
+    }
     return (
         <div className='cart'>
             <p className='cartTitle'>Shopping cart</p>
             <div className='cartCardsContainer'>
-                {cart.length === 0 ? <p className='emptySentence'>Your shopping cart is empty :(</p> : cart.map((item) => <CartItem item={item} cart={cart} setCart={setCart}/>)}
+                {cart.map((item) => <CartItem item={item} cart={cart} setCart={setCart}/>)}
             </div>
             <div className='cartTotalContainer'>
                 <p className='cartTotalItems' ref={totalItemsRef}>{cartSum} Items</p>
@@ -32,6 +42,19 @@ const Cart = ({cart, setCart, cartSum}: Props) => {
                     <p className='checkoutInfo'>Shipping cost</p>
                     <p className='checkoutInfo'>TBD</p>
                 </div>
+                <div className='checkoutInfoContainer'>
+                    <p className='checkoutInfo'>Discount</p>
+                    <p className='checkoutInfo'>- 0 kr</p>
+                </div>
+                <div className='checkoutInfoContainer'>
+                    <p className='checkoutInfo'>Tax</p>
+                    <p className='checkoutInfo'>TBD</p>
+                </div>
+                <div className='checkoutInfoContainer estTotal'>
+                    <p className='checkoutInfo'>Estimated Total</p>
+                    <p className='checkoutInfo'>{199*cartSum} kr</p>
+                </div>
+                <button className='codeBtn checkoutBtn'>Checkout</button>
             </div>
         </div>
     )
