@@ -3,12 +3,11 @@
     margin-left: 17rem;
     margin-right: 17rem;
     margin-top: 3rem;
+    margin-bottom: 3rem;
     border-radius: 12px;
     user-select: none;
     background-color: rgb(255, 235, 242);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1rem;
+    padding: 1rem;
 }
 
 .cart p {
@@ -98,6 +97,5 @@
 .checkoutBtn {
     height: 2.5rem;
     margin-top: 1rem;
-    margin-bottom: 1rem;
     border-radius: 6px;
 }

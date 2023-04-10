@@ -15,10 +15,10 @@ const Filter = ({milks, setFilterActive, filterResults, setFilterResults, arrowR
     const getMilkTypes = (milkArray: MilkProduct[]) => {
         const auxArray: string[] = [];
         milkArray.forEach((milk: MilkProduct) => {
-            if (auxArray.includes(milk.type)) {
+            if (auxArray.includes(milk.type!)) {
                 return;
             }
-            auxArray.push(milk.type);
+            auxArray.push(milk.type!);
         })
         return auxArray.sort(); 
     }

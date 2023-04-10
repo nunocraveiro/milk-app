@@ -1,0 +1,25 @@
+.paginationDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 32.5rem;
+    margin-right: 32.5rem;
+    margin-top: 3.5rem;
+    margin-bottom: 3rem;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.paginationDiv p {
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.navigate {
+    cursor: pointer;
+}
+
+.bold {
+    font-weight: 800 !important;
+}

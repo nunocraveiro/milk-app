@@ -5,10 +5,12 @@
 
 * Clone the project and npm install on both backend and frontend folders
 
-* Start both backend and frontend with npm start. 
+* Start both backend and frontend with npm start.
+
+## Additional info
+
+* Cart stays saved on page refresh but clears on tab close.
 
 ## Future features
-
-* Pagination
 
 * Mobile responsiveness

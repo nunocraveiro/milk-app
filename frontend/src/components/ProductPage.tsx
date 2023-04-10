@@ -2,7 +2,8 @@ import { useParams } from 'react-router-dom';
 import { MilkProduct, CartProduct } from '../types';
 import './ProductPage.css';
 import milkImg from '../milk.png';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 type Props = {
     milks: MilkProduct[],
@@ -12,8 +13,21 @@ type Props = {
 
 const ProductPage = ({milks, cart, setCart}: Props) => {
     const params = useParams();
-    const product = milks.find((milk) => milk.id === params.productId);
+    const [product, setProduct] = useState<MilkProduct>({});
     const quantityRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const getData = () => {
+          axios.get('http://localhost:3001/')
+          .then(res => {
+            setProduct(res.data.results.find((milk: MilkProduct) => milk.id === params.productId));
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        }
+        getData();
+      }, [])
 
     const handleDecrease = () => {
         if (quantityRef.current!.innerHTML === '1') return;

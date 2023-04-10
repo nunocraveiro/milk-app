@@ -1,8 +1,8 @@
 export interface MilkProduct {
-    name: string,
-    type: string,
-    storage: number,
-    id: string
+    name?: string,
+    type?: string,
+    storage?: number,
+    id?: string
 }
 
 export interface CartProduct {

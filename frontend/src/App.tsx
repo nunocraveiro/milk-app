@@ -9,6 +9,7 @@ import Search from './components/Search';
 import Filter from './components/Filter';
 import ProductPage from './components/ProductPage';
 import Cart from './components/Cart';
+import Pagination from './components/Pagination';
 
 function App() {
   const [milks, setMilks] = useState<MilkProduct[]>([]);
@@ -17,11 +18,14 @@ function App() {
   const [searchFilterResults, setSearchFilterResults] = useState<MilkProduct[]>([]);
   const [searchActive, setSearchActive] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
-  const [cart, setCart] = useState<CartProduct[]>([]);
+  const [cart, setCart] = useState<CartProduct[]>(sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem('cart')!) : []);
   const [cartSum, setCartSum] = useState<number>(0);
+  const [pageNum, setPageNum] = useState<number>(1);
+  const numPerPage: number = 15;
 
   const arrowRef = useRef<HTMLSpanElement>(null);
   const filterRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const getData = () => {
@@ -46,6 +50,14 @@ function App() {
     setCartSum(cart.reduce((acc, obj) => acc + obj.quantity, 0));
   }, [cart])
 
+  useEffect(() => {
+    headerRef.current!.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }, [pageNum])
+
+  useEffect(() => {
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart])
+
   const closeFilterDropdown = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (!target.className.includes('search') && !target.className.includes('filter') && !target.className.includes('down') && arrowRef.current) {
@@ -59,46 +71,50 @@ function App() {
       <Routes>
         <Route path='/' element={
           <>
-            <Header cartSum={cartSum}/>
+            <Header cartSum={cartSum} headerRef={headerRef}/>
             <section className='searchFilterFeatures'>
-              <Search milks={milks} setSearchActive={setSearchActive} searchResults={searchResults} setSearchResults={setSearchResults} />
+              <Search milks={milks} setSearchActive={setSearchActive} searchResults={searchResults} setSearchResults={setSearchResults}/>
               <Filter milks={milks} setFilterActive={setFilterActive} filterResults={filterResults} setFilterResults={setFilterResults} arrowRef={arrowRef} filterRef={filterRef}/>
             </section>
             {!filterActive && !searchActive && 
               <section>
                 <p className='productNum'>{milks.length} products</p>
-                <ProductGrid milkProducts={milks}/>
+                <ProductGrid milkProducts={milks.slice(pageNum*numPerPage-numPerPage, pageNum*numPerPage)}/>
+                <Pagination pageNum={pageNum} setPageNum={setPageNum} maxPageNum={Math.ceil(milks.length/numPerPage)}/>
               </section>
             }
             {filterActive && !searchActive && 
               <section>
                 <p className='productNum'>{filterResults.length} products</p>
                 <ProductGrid milkProducts={filterResults}/>
+                <Pagination pageNum={pageNum} setPageNum={setPageNum} maxPageNum={Math.ceil(filterResults.length/numPerPage)}/>
               </section>
             }
             {searchActive && !filterActive && 
               <section>
                 <p className='productNum'>{searchResults.length} products</p>
                 <ProductGrid milkProducts={searchResults}/>
+                <Pagination pageNum={pageNum} setPageNum={setPageNum} maxPageNum={Math.ceil(searchResults.length/numPerPage)}/>
               </section>
             }
             {searchActive && filterActive && 
               <section>
                 <p className='productNum'>{searchFilterResults.length} products</p>
                 <ProductGrid milkProducts={searchFilterResults}/>
+                <Pagination pageNum={pageNum} setPageNum={setPageNum} maxPageNum={Math.ceil(searchFilterResults.length/numPerPage)}/>
               </section>
             }
           </>
         } />
         <Route path='/:productId' element={
           <>
-            <Header cartSum={cartSum}/>
+            <Header cartSum={cartSum} headerRef={headerRef}/>
             <ProductPage milks={milks} cart={cart} setCart={setCart}/>
           </>
         } />
         <Route path='/cart' element={
           <>
-            <Header cartSum={cartSum}/>
+            <Header cartSum={cartSum} headerRef={headerRef}/>
             <Cart cart={cart} setCart={setCart} cartSum={cartSum}/>
           </>
         } />

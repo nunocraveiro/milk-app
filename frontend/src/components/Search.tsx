@@ -18,7 +18,7 @@ const SearchFilter = ({milks, setSearchActive, searchResults, setSearchResults}:
             setSearchActive(false)
             return setSearchResults([]);
         }
-        return setSearchResults(milks.filter(milk => milk.name.toLowerCase().includes(e.target.value.toLowerCase())));
+        return setSearchResults(milks.filter(milk => milk.name!.toLowerCase().includes(e.target.value.toLowerCase())));
     }
 
     const closeHandler = () => {
